@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Cube</title>
+
+    <script src="https://unpkg.com/three@0.150.0/build/three.min.js"></script>
+
+</head>
+<body>
+
+    
+    <script>
+        // Scene object, where the 3d objects will live
+        const scene = new THREE.Scene();
+
+        //  Add a camera to view the scene, A Perspective Camera is commonly used
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Renderer: Init the webgl renderer and attach it to your HTML Document
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // add a cube
+        const geometry = new THREE.BoxGeometry();
+        const material = new THREE.MeshBasicMaterial( {color: 0x00ff00 } );
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // animation loop : Create a render llop to animate our scene. This function will be called for every frame to update our objects and render the scene
+        function animate() 
+        {
+            requestAnimationFrame(animate); // rotate the cube
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene,camera);
+        }
+
+        animate();
+
+
+    </script>
+</body>
+</html>
