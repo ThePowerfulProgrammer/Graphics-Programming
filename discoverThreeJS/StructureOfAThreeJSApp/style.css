@@ -1,0 +1,34 @@
+body {
+/* remove margins and scroll bars */
+margin: 0;
+overflow: hidden;
+
+/* style text */
+text-align: center;
+font-size: 12px;
+font-family: Sans-Serif;
+
+/* color text */
+color: #444;
+}
+
+h1 {
+/* position the heading */
+position: absolute;
+width: 100%;
+
+/* make sure that the heading is drawn on top */
+z-index: 1;
+}
+
+
+#scene-container 
+{
+    /* tell our scene to take up the entire page */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    background-color: skyblue; /*container background color and scene background color same to prevent flashing on load*/
+    
+}
