@@ -18,35 +18,7 @@ function createCamera()
     let zoomout = true;
     camera.tick = (delta) => 
         {
-            if (zoomout && camera.zoom > 0.5) 
-                {
-                    
-                    camera.zoom -= 0.005;
-                    console.log(camera.zoom );
-                }
-            else 
-            {
-                zoomout = false;
-                console.log("FALSE");
-            }
-            if (!zoomout) 
-                {
-                    camera.zoom += 0.005;
-                    console.log(camera.zoom );                    
-                }
 
-            // if (camera.zoom < 1) 
-            //     {
-                    
-            //         camera.zoom += 0.005;
-            //         console.log(camera.zoom );
-            //     }
-            // else 
-            // {
-            //     zoomout = true;
-            // }            
-
-            camera.updateProjectionMatrix();
         }
 
     return camera;
