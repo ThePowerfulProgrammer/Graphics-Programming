@@ -15,6 +15,7 @@ import { createRenderer } from "../../systems/renderer.js";
 import { Resizer } from "../../systems/Resizer.js";
 
 import { Loop } from "../../systems/Loop.js";
+import { createControls } from "../../systems/controls.js";
 
 let camera;
 let renderer;
@@ -34,13 +35,15 @@ class World
         camera = createCamera();
         scene = createScene();
         renderer = createRenderer();
+        const controls = createControls(camera, renderer.domElement);
+
         loop = new Loop(camera, scene, renderer);
         container.append(renderer.domElement);
 
         
 
         cube = createCube();
-        loop.updateables.push(cube);
+        // loop.updateables.push(cube);
         const light = createLights();
         scene.add(cube, light);
 
