@@ -12,6 +12,8 @@ function main()
 
   // no more calling out world.render() we instead need to create an animation loop
   world.start();
+
+  // world.render();         // If I want to enable render on demand
 }
 
 let button = document.getElementById("btn");
