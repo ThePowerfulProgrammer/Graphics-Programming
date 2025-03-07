@@ -1,13 +1,14 @@
-import { DirectionalLight, PointLight } from "https://cdn.skypack.dev/three@0.132.2";
+import { DirectionalLight, PointLight, AmbientLight } from "https://cdn.skypack.dev/three@0.132.2";
 
 function createLights() 
 {
     const light = new DirectionalLight('white', 8) ;
     light.position.set(10,10, 10);
     
+    const ambientLight = new AmbientLight('white', 2);
+    
 
-
-    return light;
+    return {ambientLight, light};
 }
 
 function  createLightPointLight() 

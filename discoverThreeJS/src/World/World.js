@@ -44,8 +44,8 @@ class World
 
         cube = createCube();
         // loop.updateables.push(cube);
-        const light = createLights();
-        scene.add(cube, light);
+        const {ambientLight, light} = createLights();
+        scene.add(cube, light, ambientLight);
         loop.updateables.push(controls);
 
         // If I want to enable render on demand
