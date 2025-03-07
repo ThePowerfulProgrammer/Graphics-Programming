@@ -1,4 +1,4 @@
-import { DirectionalLight, PointLight, AmbientLight } from "https://cdn.skypack.dev/three@0.132.2";
+import { DirectionalLight, PointLight, AmbientLight, HemisphereLight } from "https://cdn.skypack.dev/three@0.132.2";
 
 function createLights() 
 {
@@ -6,9 +6,11 @@ function createLights()
     light.position.set(10,10, 10);
     
     const ambientLight = new AmbientLight('white', 2);
+
+    const hemisphereLight = new HemisphereLight('white', 'darkslategray', 5);
     
 
-    return {ambientLight, light};
+    return {ambientLight, light, hemisphereLight};
 }
 
 function  createLightPointLight() 

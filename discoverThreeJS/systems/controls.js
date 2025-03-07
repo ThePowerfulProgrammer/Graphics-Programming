@@ -11,8 +11,7 @@ function createControls(camera, canvas)
     controls.minDistance = 1;
     controls.maxDistance = 20;
 
-    controls.autoRotate = true;
-    controls.autoRotateSpeed = 0.5;
+
 
     // another monkey method
     controls.tick = () => controls.update();
