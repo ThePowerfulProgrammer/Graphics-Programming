@@ -2,9 +2,8 @@
 // this class coordinates the setup of our 3D scene while offloading the complexity onto separate modules.
 
 import { createCamera  } from "../../components/camera.js"
-import { createCube } from "../../components/cube.js";
-import { rotateCube } from "../../components/cube.js";
-import { createMeshBasicCube } from "../../components/cube.js";
+import { createMeshGroup } from "../../components/meshGroup.js";
+
 import { createScene } from "../../components/scene.js";
 
 import { createLights } from "../../components/lights.js";
@@ -42,10 +41,11 @@ class World
 
         
 
-        cube = createCube();
-        // loop.updateables.push(cube);
+        const meshGroup = createMeshGroup();
+        loop.updateables.push(controls,meshGroup);
+        
         const {ambientLight, light, hemisphereLight} = createLights();
-        scene.add(cube, light, hemisphereLight);
+        scene.add(ambientLight,light, meshGroup);
         loop.updateables.push(controls);
 
         // If I want to enable render on demand
@@ -53,9 +53,8 @@ class World
         //     this.render();
         // })
 
-        basicCube = createMeshBasicCube();
-        loop.updateables.push(basicCube);
-        scene.add(basicCube);
+
+
         loop.updateables.push(camera)
 
         const resizer = new Resizer(container, camera, renderer); // what is needed to be done is done in the resizer class

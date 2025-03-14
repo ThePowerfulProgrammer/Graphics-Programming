@@ -1,5 +1,6 @@
 import {
     SphereBufferGeometry,
+    BoxBufferGeometry,
     Group,
     MathUtils,
     Mesh, 
@@ -16,7 +17,7 @@ function createMeshGroup()
         color: "indigo",
     })
 
-    const protoSphere = new Mesh(geometry, material);
+    const protoSphere = new Mesh(geometry, material); //sphere in the middle
 
     group.add(protoSphere);
 
@@ -28,18 +29,18 @@ function createMeshGroup()
             sphere.position.x = Math.cos(2 * Math.PI * i);
             sphere.position.y = Math.sin(2 * Math.PI * i);
 
-            sphere.scale.multiplyScalar(0.01 + i);
+            sphere.scale.multiplyScalar(0.001 + i);
             group.add(sphere);
         }
 
-    
-    group.scale.multiplyScalar(2);
+        
 
     const radiansPerSecond = MathUtils.degToRad(30);
 
     group.tick = (delta) => 
         {
-            group.rotation.z -= delta * radiansPerSecond;
+            
+            group.rotation.z += delta * radiansPerSecond;
 
         };
     return group;
