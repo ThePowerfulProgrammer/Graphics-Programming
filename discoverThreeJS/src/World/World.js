@@ -16,6 +16,10 @@ import { Resizer } from "../../systems/Resizer.js";
 import { Loop } from "../../systems/Loop.js";
 import { createControls } from "../../systems/controls.js";
 
+import { createAxesHelper, createGridHelper } from "../../components/helpers.js";
+import { Train } from "../../components/Train/Train.js";
+
+
 let camera;
 let renderer;
 let scene;
@@ -41,21 +45,25 @@ class World
 
         
 
-        const meshGroup = createMeshGroup();
-        loop.updateables.push(controls,meshGroup);
-        
-        const {ambientLight, light, hemisphereLight} = createLights();
-        scene.add(ambientLight,light, meshGroup);
+        // const meshGroup = createMeshGroup();
         loop.updateables.push(controls);
+        
+        const train = new Train();
+        const trainClone = train.clone();
+        trainClone.position.z = -4;
+
+        const {ambientLight, light, hemisphereLight} = createLights();
+        scene.add(ambientLight,light, train, trainClone);
+        loop.updateables.push(controls, train, trainClone);
 
         // If I want to enable render on demand
         // controls.addEventListener('change', () => {
         //     this.render();
         // })
 
+        scene.add(createAxesHelper(), createGridHelper());
 
-
-        loop.updateables.push(camera)
+        loop.updateables.push(camera);
 
         const resizer = new Resizer(container, camera, renderer); // what is needed to be done is done in the resizer class
 
