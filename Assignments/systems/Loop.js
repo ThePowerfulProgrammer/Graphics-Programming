@@ -23,7 +23,7 @@ class Loop
             {
                 // tell every animated object to 'do its's thing' once per frame
                 this.tick();
-
+                this.tickRevolve();
                 this.renderer.render(this.scene, this.camera); // render a frame from the loop
             });
     }
@@ -42,7 +42,13 @@ class Loop
             {
                 this.loopUpdateables[i].tick(delta);
             }
-    }    
+    }  
+    
+    // this might be a way for me to revolve the planets around the sun
+    tickRevolve() 
+    {
+
+    }
 
 }
 

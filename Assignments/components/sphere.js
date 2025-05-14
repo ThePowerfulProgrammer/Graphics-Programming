@@ -5,7 +5,8 @@ import {
     MeshStandardMaterial, // our light feeling material
     Mesh,
     MathUtils,
-    TextureLoader
+    TextureLoader,
+    Clock
 } from "https://cdn.skypack.dev/three@0.132.2";
 
 const radians = MathUtils.degToRad(90);
@@ -44,10 +45,17 @@ function createSphere()
     return sphere;
 }
 
+
+
 class CelestialObject 
 {
+    
+    static planetsCoordinates = {};
+    static clock = new Clock(true);
+
     constructor(radius,position, texturePath, name )   
     {
+        CelestialObject.clock.start();
         this.radius = radius;
         this.position = position;
         this.texturePath = texturePath;
@@ -55,6 +63,7 @@ class CelestialObject
         this.sphere = null;
         this.planetsArray = [];
         this.materials = new Array("../assets/mercuryTexture.jpg", "../assets/venusTexture.jpg", "../assets/earthTexture.jpg", "../assets/marsTexture.jpg", "../assets/jupiterTexture.jpg", "../assets/saturnTexture.jpg", "../assets/uranusTexture.jpg", "../assets/neptuneTexture.jpg");
+        this.orbit = false
         
 
         // no no no create the entire object here
@@ -63,9 +72,14 @@ class CelestialObject
         const material = createTextureMaterial(this.texturePath);
         this.sphere = new Mesh(geometry, material);
 
+    // create a temp solution for revolving planets by all the following vars
+        this.c;
+        this.distance;
+        this.additionalDistance;    
+        this.index;
     }
 
-
+    // decrypt
     createOrbitingPlanets(entity) 
     {
         const position = entity.getPos(); // grab position of sphere
@@ -132,23 +146,67 @@ class CelestialObject
         return this.sphere;
     }
 
+    alterPosition() 
+    {
+        if (this.index < 7) 
+            {
+
+                // if the planet index is not 7 print the next planets coordinate
+                this.sphere.position.x = CelestialObject.planetsCoordinates[this.index + 1].x;
+                this.sphere.position.z = CelestialObject.planetsCoordinates[this.index + 1].z;
+                this.index = this.index + 1;
+
+            }
+        else if (this.index == 7)
+        {
+            console.log( CelestialObject.planetsCoordinates[0].x);
+            this.sphere.position.x = CelestialObject.planetsCoordinates[0].x;
+            this.sphere.position.z = CelestialObject.planetsCoordinates[0].z;
+            this.index = 0;
+        }
+
+    }
+
     tick(delta)  
     {
-        if (this.sphere && this.angle) 
+
+        if (this.sphere && this.orbit) 
             {
-                // usually rotation of the sphere
+                // rotate the sphere
                 this.sphere.rotation.y += radians * delta;
+                // But i also need to move its z position
+                // this.sphere.position.x += 0.005;
+                // if (CelestialObject.clock.getElapsedTime() > 5) 
+                //     {
+                //         console.log("5 seconds have passed")
+                //         console.log(CelestialObject.clock.getElapsedTime());
+                //         this.alterPosition();
+                //         CelestialObject.clock.stop();
+                //         CelestialObject.clock.start();
 
-                // move the sphere along the circumference just a little
-                // we will use a seperate function for this
+                //     }
+                
+                return this.sphere;
 
+
+            }
+        else if (this.sphere ) 
+            {
+                this.sphere.rotation.y += radians * delta;
+                // for (let key in CelestialObject.planetsCoordinates) 
+                //     {
+                //         if (key < 7) 
+                //             {
+                //                 this.sphere.position.x = CelestialObject.planetsCoordinates[key+1].x;
+                //                 this.sphere.position.z = CelestialObject.planetsCoordinates[key+1].z;
+                //             }
+
+
+                //     }
+             
                 return this.sphere;
             }
-        else if (this.sphere) 
-            {
-                this.sphere.rotation.y += radians * delta;
-                return this.sphere;
-            }
+
 
     }
 

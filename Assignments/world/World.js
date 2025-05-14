@@ -53,7 +53,7 @@ class World
         
         var c = 0.125;
         let distance = 5;
-        let additionalDistance = 1;
+        let additionalDistance = 1; // move each sphere further outward
         for (let i=0;i<sphere.materials.length;i++) 
             {
                 // const angle =  (2 *Math.PI * c); // point on the circumeference away from the SUN
@@ -61,15 +61,31 @@ class World
                 const xCor = (Math.cos(2 *Math.PI * c) * distance ) * additionalDistance;
                 // const yCor = (Math.sin(2 *Math.PI * c) * distance ) ;
                 const zCor = (Math.sin(2 *Math.PI * c) * distance ) * additionalDistance;
-
+                CelestialObject.planetsCoordinates[i] = {x: xCor, z: zCor};
+                planetsArray
                 planetsArray[i].getSphere().position.set(xCor,0, zCor);
                 planetsArray[i].getSphere().scale.multiplyScalar(1/2);
 
                 // distance += 2;
                 c += 0.125;
                 // additionalDistance += 0.04; // planets are different radius from the sun , work on this later
-
+                planetsArray[i].orbit = true;
+                planetsArray[i].c = c;
+                planetsArray[i].distance = distance;
+                planetsArray[i].additionalDistance = additionalDistance;
+                planetsArray[i].index = i;
+                console.log(planetsArray[i].index)
+                console.log("X , Z = ", xCor, "," , zCor);
+                
             }
+
+            for (let key in CelestialObject.planetsCoordinates) 
+                {
+                    console.log(key, CelestialObject.planetsCoordinates[key].x,CelestialObject.planetsCoordinates[key].z);
+
+                }
+
+        // planetsArray[7].getSphere().position.set(planetsArray[0].getSphere().position.x,1, planetsArray[0].getSphere().position.z);
 
         for (let i=0;i<planetsArray.length;i++) 
             {
