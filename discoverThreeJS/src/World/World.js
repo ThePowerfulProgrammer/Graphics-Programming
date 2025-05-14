@@ -18,6 +18,7 @@ import { createControls } from "../../systems/controls.js";
 
 import { createAxesHelper, createGridHelper } from "../../components/helpers.js";
 import { Train } from "../../components/Train/Train.js";
+import { TrainTrack } from "../../components/Train/TrainTrack.js"
 
 
 let camera;
@@ -49,12 +50,12 @@ class World
         loop.updateables.push(controls);
         
         const train = new Train();
-        const trainClone = train.clone();
-        trainClone.position.z = -4;
+        const trainTrack = new TrainTrack();
+
 
         const {ambientLight, light, hemisphereLight} = createLights();
-        scene.add(ambientLight,light, train, trainClone);
-        loop.updateables.push(controls, train, trainClone);
+        scene.add(ambientLight,light, train, trainTrack);
+        loop.updateables.push(controls, train) ;
 
         // If I want to enable render on demand
         // controls.addEventListener('change', () => {

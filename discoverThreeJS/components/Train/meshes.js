@@ -5,6 +5,8 @@ import { createMaterials } from "./materials.js";
 
 /**	A combination of Geometry + Material	The actual renderable object in the scene */
 
+// where we create our geometric entities by using shapes from geometries and materials from materials
+
 function createMeshes() 
 {
     const geometries = createGeometries(); // create the geometries for out meshes : returns an object of size 2
@@ -20,7 +22,7 @@ function createMeshes()
     nose.position.set(-1, 1, 0);
     nose.rotation.z = Math.PI / 2;    
 
-
+  // wheels
     const smallWheelRear = new Mesh(geometries.wheel, materials.detail);
     smallWheelRear.position.y = 0.5;
     smallWheelRear.rotation.x = Math.PI/2;
@@ -35,6 +37,21 @@ function createMeshes()
     bigWheel.position.set(1.5, 0.9, 0);
     bigWheel.scale.set(2, 1.25, 2);    
 
+    // tracks
+    const trainTrack = new Mesh(geometries.track, materials.trainTrackDetail);
+    trainTrack.position.set(0,-0.2,0.85); // track left
+    trainTrack.rotation.z = Math.PI/2; // 180/2 = 90 deg
+    
+
+
+    const trainTrackTwo = trainTrack.clone();
+    trainTrack.position.set(0,-0.2, -0.85); // track right
+    
+
+    const circleMesh = new Mesh(geometries.geometry, materials.circleMaterial);
+    circleMesh.rotation.y = 1.555;
+    circleMesh.position.x -= (4.5*6) - 2.25;
+
     return {
         nose,
         cabin,
@@ -43,6 +60,9 @@ function createMeshes()
         smallWheelCenter,
         smallWheelFront,
         bigWheel,
+        trainTrack,
+        trainTrackTwo,
+        circleMesh,
       };    
 }
 

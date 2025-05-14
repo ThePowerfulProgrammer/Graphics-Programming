@@ -21,6 +21,18 @@ width: 100%;
 z-index: 1;
 }
 
+#btn 
+{
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: 2px solid black;
+}
+
+#btn:hover 
+{
+    background-color: black;
+    color: white;
+}
 
 #scene-container 
 {

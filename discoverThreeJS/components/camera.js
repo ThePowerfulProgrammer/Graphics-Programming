@@ -4,10 +4,10 @@ import { PerspectiveCamera } from "https://cdn.skypack.dev/three@0.132.2";
 function createCamera() 
 {
     const camera = new PerspectiveCamera(
-        35, 
+        50, 
         1, 
-        0.1,
-        100
+        0.01,
+        2000
     );
 
     camera.position.set(0,0, 10);
