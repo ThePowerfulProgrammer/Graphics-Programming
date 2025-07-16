@@ -2,12 +2,14 @@ import {World} from './World.js'
 
 
 console.log("Render Universe");
-function renderUniverse() 
+async function renderUniverse() 
 {
     const container = document.getElementById("scene-container");
     
     const world = new World(container);
 
+    // complete async tasks
+    await world.init();
 
     world.start();
 }

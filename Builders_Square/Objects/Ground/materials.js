@@ -11,7 +11,7 @@ import { MeshStandardMaterial
             roughness: 0.50,
             metalness: 0.30,
             emissive: '#0f0f1f',
-            emissiveIntensity: 0.20 
+            emissiveIntensity: 0.2
         }
     );
 

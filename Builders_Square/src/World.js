@@ -5,6 +5,7 @@ import { createScene } from "../components/scene.js";
 import {createDirectionalLight} from "../components/light.js"
 import { createPointLight } from '../components/light.js';
 import { createRoadLights } from '../components/light.js';
+import { createPointLightForSkyScraper } from '../components/light.js';
 
 import { createRenderer } from "../systems/renderer.js";
 import { createControls } from "../systems/controls.js";
@@ -19,11 +20,15 @@ import { MathUtils, Vector3 } from "https://cdn.skypack.dev/three@0.132.2";
 import { Ground } from '../Objects/Ground/Ground.js';
 import { Fence } from '../Objects/Fence/Fence.js';
 import { Road } from '../Objects/Road/Road.js';
+import { Skyscraper } from '../Objects/SkyScraper/SkyScraper.js';
+import { loadEmpireStateBuilding } from '../Models/EmpireStateBuilding.js';
 
 let camera;
 let scene;
-let directionLight
+let directionLight;
+let directionalLightFwd;
 let pointLightOne;
+let pointLightForSmallerSkyScrapers;
 let roadLightOne;
 let roadLightTwo;
 
@@ -41,11 +46,14 @@ class World
         camera = createCamera();
         scene = createScene();
         renderer = createRenderer();
-        directionLight = createDirectionalLight();
+        directionLight = createDirectionalLight().directionalLight;
+        directionalLightFwd = createDirectionalLight().directionLightForward;
+
         pointLightOne = createPointLight();
         roadLightOne = createRoadLights().pointLightOne;
         roadLightTwo = createRoadLights().pointLightTwo;
-        
+        pointLightForSmallerSkyScrapers = createPointLightForSkyScraper().pointLightForSmallerSkyScrapers;
+
         grid = createGridHelper();
         axes = createAxesHelper();
         
@@ -57,9 +65,10 @@ class World
 
 
 
-        scene.add(directionLight);
+        scene.add(directionLight, directionalLightFwd);
         scene.add(pointLightOne);
         scene.add(roadLightOne, roadLightTwo);
+        scene.add(pointLightForSmallerSkyScrapers);
         scene.add(grid);
         scene.add(axes)
 
@@ -101,9 +110,79 @@ class World
         fenceWallFour.changePosition(12,0.5,3);
         scene.add(fenceWallFour);        
 
-        const road = new Road();
+        const road = new Road(); // road for entry and exit of builder_Square
         scene.add(road);
         
+
+        // Creating Skyscrapers
+        const skyScraperCubeOne = new Skyscraper("cube");
+        skyScraperCubeOne.scaleY(20);
+        skyScraperCubeOne.scaleX(3);
+        skyScraperCubeOne.scaleZ(3);
+        scene.add(skyScraperCubeOne);
+
+        const skyScraperCubeTwo = new Skyscraper("cube");
+        skyScraperCubeTwo.scaleY(25);
+        skyScraperCubeTwo.scaleX(2.5);
+        skyScraperCubeTwo.scaleZ(2.5);
+        skyScraperCubeTwo.changePosition(5,skyScraperCubeTwo.position.y,2.5);
+        scene.add(skyScraperCubeTwo);   
+        
+        const skyScraperCubeThree = new Skyscraper("cube");
+        skyScraperCubeThree.scaleY(25);
+        skyScraperCubeThree.scaleX(2);
+        skyScraperCubeThree.scaleZ(2);
+        skyScraperCubeThree.changePosition(3,skyScraperCubeThree.position.y,-1.5);
+        scene.add(skyScraperCubeThree);           
+
+
+        // Creating smaller Skyscrappers
+        const skyScraperCubeFour = new Skyscraper("residentCube");
+        skyScraperCubeFour.changePosition(-7,1,8);
+        skyScraperCubeFour.scaleY(10);
+        skyScraperCubeFour.scaleX(1);
+        skyScraperCubeFour.scaleZ(1);        
+        scene.add(skyScraperCubeFour);        
+
+        const skyScraperCubeFive = new Skyscraper("residentCube");
+        skyScraperCubeFive.changePosition(-5,1,8);
+        skyScraperCubeFive.scaleY(10);
+        skyScraperCubeFive.scaleX(1);
+        skyScraperCubeFive.scaleZ(1);        
+        scene.add(skyScraperCubeFive);
+        
+        const skyScraperCubeSix = new Skyscraper("residentCube");
+        skyScraperCubeSix.changePosition(-3,1,9);
+        skyScraperCubeSix.scaleY(8);
+        skyScraperCubeSix.scaleX(1);
+        skyScraperCubeSix.scaleZ(1);        
+        scene.add(skyScraperCubeSix);        
+
+        const skyScraperCubeSeven = new Skyscraper("residentCube");
+        skyScraperCubeSeven.changePosition(-7,1,10);
+        skyScraperCubeSeven.scaleY(5);
+        skyScraperCubeSeven.scaleX(1);
+        skyScraperCubeSeven.scaleZ(1);        
+        scene.add(skyScraperCubeSeven);       
+        
+        const skyScraperCubeEight = new Skyscraper("residentCube");
+        skyScraperCubeEight.changePosition(-5,1,10);
+        skyScraperCubeEight.scaleY(5);
+        skyScraperCubeEight.scaleX(1);
+        skyScraperCubeEight.scaleZ(1);        
+        scene.add(skyScraperCubeEight);               
+
+
+        // Texture building
+
+        const skyScraperCubeNineTextured = new Skyscraper("textureCube");
+        skyScraperCubeNineTextured.changePosition(-5,1,3);
+        skyScraperCubeNineTextured.scaleY(20);
+        skyScraperCubeNineTextured.scaleX(4);
+        skyScraperCubeNineTextured.scaleZ(4);
+
+        scene.add(skyScraperCubeNineTextured);
+
 
         // handle resizer
         const resizer = new Resizer(container, camera, renderer);
@@ -119,7 +198,7 @@ class World
         function animate() 
         {
             requestAnimationFrame(animate);
-            renderer.render(this.scene, this.camera);        
+            renderer.render(scene, camera);        
         }
         animate();
     }
@@ -134,6 +213,21 @@ class World
         loop.stop();
     }    
 
+    async init() 
+    {
+        
+        try 
+        {
+            const esb = await loadEmpireStateBuilding();            
+            esb.scale.set(3,5,3);
+            esb.position.set(-8,22,-8);
+            scene.add(esb);
+        }
+        catch 
+        {
+            console.log(error);
+        }
+    }
 }
 
 export {World};

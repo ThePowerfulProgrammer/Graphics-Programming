@@ -19,17 +19,24 @@ import { DirectionalLight, PointLight, AmbientLight, HemisphereLight, SpotLight 
 
 function createDirectionalLight() 
 {
-    const directionalLight = new DirectionalLight("white", 0);
-    directionalLight.position.set(0,10,10);
+    const directionalLight = new DirectionalLight("white",2); //#0062ff
+    directionalLight.position.set(-5,10,-20);
+    directionalLight.target.position.set(-5,1,3);
     directionalLight.castShadow = true;
-    return directionalLight;
+ 
+    const directionLightForward = new DirectionalLight("white", 2);
+    directionLightForward.position.set(0,10,25);
+    directionLightForward.target.position.set(-5,0,0);
+    directionLightForward.castShadow = true;
+
+    return {directionalLight, directionLightForward};
 }
 
 
 function createPointLight() 
 {
-    const pointLight = new PointLight("#0062ff", 100);
-    pointLight.position.set(0,20,0);
+    const pointLight = new PointLight("#0062ff", 150);
+    pointLight.position.set(1,15,1);
     pointLight.castShadow = true;
     return pointLight;
 }
@@ -48,8 +55,19 @@ function createRoadLights()
     return {pointLightOne, pointLightTwo};
 }
 
+function createPointLightForSkyScraper() 
+{
+    const pointLightForSmallerSkyScrapers = new PointLight("#FB00FF", 80);
+    pointLightForSmallerSkyScrapers.castShadow = true;
+
+    pointLightForSmallerSkyScrapers.position.set(-10,5,9);
+
+    return {pointLightForSmallerSkyScrapers};
+}   
+
 // #2b1035
 
 export {createDirectionalLight};
 export {createPointLight};
 export {createRoadLights};
+export {createPointLightForSkyScraper};

@@ -3,8 +3,8 @@ import { PerspectiveCamera } from "https://cdn.skypack.dev/three@0.132.2";
 function createCamera() 
 {
     const camera = new PerspectiveCamera(
-        100,
-        window.innerWidth/window.innerWidth,
+        110,
+        window.innerWidth/window.innerHeight,
         0.01,
         200
     ); // fov,aspect, near, far
@@ -30,7 +30,7 @@ function createCamera()
     // Vice versa of near
 
     // ADJUST POSITION OF OUR CAMERA: DEFAULT IS (0,0,0) AS ALL OBJECTS IN 3JS --> THIS IS NOT WHERE THE CAMERA TARGETS!
-    camera.position.set(0,8,20); // move the camera 2 meters up and 12 meters toward us
+    camera.position.set(0,15,50); // move the camera 2 meters up and 12 meters toward us
     
 
     return camera; 
